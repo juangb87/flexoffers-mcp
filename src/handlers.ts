@@ -30,9 +30,9 @@ export async function handleTool(
     // ─── Promotions ─────────────────────────────────────────────────────────
     case "fo_list_promotions": {
       const params = { ...args } as Record<string, string | number | boolean>;
-      // Map boolean couponsOnly → 0/1
+      // API expects string "true"/"false", not 0/1
       if (typeof params.couponsOnly === "boolean") {
-        params.couponsOnly = params.couponsOnly ? 1 : 0;
+        params.couponsOnly = String(params.couponsOnly);
       }
       return foGet("/promotions", params);
     }
@@ -55,7 +55,7 @@ export async function handleTool(
 
     // ─── Deeplinks ──────────────────────────────────────────────────────────
     case "fo_generate_deeplink":
-      return foPost("/deeplink/apideeplink", args);
+      return foGet("/deeplink/apideeplink", args as Record<string, string | number | boolean>);
 
     // ─── Cards ──────────────────────────────────────────────────────────────
     case "fo_list_cards":

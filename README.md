@@ -71,6 +71,7 @@ FLEXOFFERS_API_KEY=xxx npm run dev
 | `fo_list_cards` | Ofertas de tarjetas de crédito |
 | `fo_get_payment_summary` | Resumen de pagos por periodo |
 | `fo_get_payment_details` | Detalle de pagos por anunciante |
+| `fo_list_all_sales` | Lista ventas de `/allsales` por rango de fechas |
 | `fo_export_report` | Exporta reporte de clicks o ventas (CSV) |
 
 ## Ejemplos de uso (en Claude)
@@ -87,4 +88,7 @@ Genera un deeplink para https://amazon.com/producto/123
 
 ¿Cuánto gané en marzo 2026?
 → usa fo_get_payment_summary con startdate=03/01/2026 enddate=03/31/2026
+
+Trae las ventas de ayer con detalle de productos
+→ usa fo_list_all_sales con status=all, reportType=details, startDate=07/16/2026, endDate=07/16/2026, dateType=eventDate, page=1, pageSize=500
 ```

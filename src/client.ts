@@ -11,6 +11,24 @@ function getApiKey(): string {
   return key;
 }
 
+async function parseResponse(res: Response): Promise<unknown> {
+  if (res.status === 204) return null;
+
+  const text = await res.text();
+  if (!text) return null;
+
+  const contentType = res.headers.get("content-type") ?? "";
+  if (contentType.includes("application/json")) {
+    return JSON.parse(text);
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
+}
+
 export async function foGet(
   path: string,
   params: Record<string, string | number | boolean | undefined> = {}
@@ -21,7 +39,7 @@ export async function foGet(
   }
 
   const res = await fetch(url.toString(), {
-    headers: { apiKey: getApiKey(), Accept: "application/json" },
+    headers: { apiKey: getApiKey(), Accept: "application/json, text/csv, */*" },
   });
 
   if (!res.ok) {
@@ -29,7 +47,7 @@ export async function foGet(
     throw new Error(`FlexOffers API ${res.status} on ${path}: ${body}`);
   }
 
-  return res.json();
+  return parseResponse(res);
 }
 
 export async function foPost(path: string, body: unknown): Promise<unknown> {
@@ -48,5 +66,5 @@ export async function foPost(path: string, body: unknown): Promise<unknown> {
     throw new Error(`FlexOffers API ${res.status} on ${path}: ${text}`);
   }
 
-  return res.json();
+  return parseResponse(res);
 }

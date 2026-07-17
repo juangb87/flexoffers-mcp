@@ -68,6 +68,10 @@ export async function handleTool(
     case "fo_get_payment_details":
       return foGet("/payments/details", args as Record<string, string | number>);
 
+    // ─── Sales ──────────────────────────────────────────────────────────────
+    case "fo_list_all_sales":
+      return foGet("/allsales", args as Record<string, string | number>);
+
     // ─── Reports ────────────────────────────────────────────────────────────
     case "fo_export_report": {
       const params = {

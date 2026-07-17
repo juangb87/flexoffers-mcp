@@ -232,6 +232,66 @@ export const TOOLS = [
     },
   },
 
+  // ─── Sales ────────────────────────────────────────────────────────────────
+  {
+    name: "fo_list_all_sales",
+    description:
+      "Retrieve FlexOffers sales from /allsales for a date range. Use reportType=details to include sold items.",
+    inputSchema: {
+      type: "object",
+      required: ["status", "reportType", "startDate", "page", "pageSize"],
+      properties: {
+        status: {
+          type: "string",
+          description: "Sale status filter. Use all to include every status.",
+          enum: ["all", "pending", "approved", "cancelled", "bonus", "non-commissionable"],
+        },
+        reportType: {
+          type: "string",
+          description: "sales = sale rows; details = sale rows with sold items.",
+          enum: ["sales", "details"],
+        },
+        dateType: {
+          type: "string",
+          description: "Date field used for filtering and sorting.",
+          enum: ["clickDate", "postedDate", "eventDate", "modifiedDate"],
+        },
+        adjustmentType: {
+          type: "string",
+          description: "Filter by adjustment type.",
+          enum: ["New Record", "Update Record"],
+        },
+        startDate: {
+          type: "string",
+          description: "Start date MM/DD/YYYY",
+        },
+        endDate: {
+          type: "string",
+          description: "End date MM/DD/YYYY. Defaults to today if omitted by the API.",
+        },
+        programID: {
+          type: "number",
+          description: "Advertiser program ID.",
+        },
+        sortOrder: {
+          type: "string",
+          description: "Sort direction.",
+          enum: ["ASC", "DESC"],
+        },
+        page: {
+          type: "number",
+          description: "Page number, starting at 1.",
+        },
+        pageSize: {
+          type: "number",
+          description: "Records per page, 1-500.",
+          minimum: 1,
+          maximum: 500,
+        },
+      },
+    },
+  },
+
   // ─── Reports ──────────────────────────────────────────────────────────────
   {
     name: "fo_export_report",
